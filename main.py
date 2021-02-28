@@ -2,11 +2,11 @@ from flask import Flask, url_for, render_template, redirect, request
 from database import Database
 
 app = Flask(__name__)
-db = Database() #Cria um objeto do banco de dados
 
 @app.route("/")
 def main():
     '''Caminho principal: mostra a pagina inicial da aplicacao'''
+    db = Database() #Cria um objeto do banco de dados
     data = db.search_all() #Busca todos os registros do banco de dados
     data_formatted = [] #Armazena os dados formatados
     for each in data:
@@ -17,6 +17,7 @@ def main():
 @app.route("/delete/<id_person>", methods=["POST"])
 def delete(id_person):
     '''Caminho para deletar um registro do banco de dados'''
+    db = Database() #Cria um objeto do banco de dados
     db.delete(int(id_person))
     return redirect(url_for("main")) #Redireciona a pagina inicial com os registros ja atualizados
 
@@ -32,6 +33,7 @@ def add():
             "data_nascimento": str(request.form.get("birthday")),
             "funcao": int(request.form.get("role"))
         }
+        db = Database() #Cria um objeto do banco de dados
         db.insert(info) #A conversao deu certo. Adicione no banco de dados
     except ValueError as err: #Houve um erro durante a conversao. Exibe o tipo de erro
         print("Dados invalidos: ", err)
