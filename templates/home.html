@@ -12,11 +12,11 @@
             <th>Excluir registro</th>
         </tr>
 
-        {% for registro in registros %}
-        <tr id="{{registro[0]}}">
-            <td>{{registro[1]}}</td>
-            <td>{{registro[2]}}</td>
-            <td><a href="delete/{{registro[0]}}" class="botao-apagar">Apagar</a></td>
+        {% for each in data_formatted %}
+        <tr id="{{each[0]}}">
+            <td>{{each[1]}}</td>
+            <td>{{each[2]}}</td>
+            <td><a href="delete/{{each[0]}}" class="botao-apagar">Apagar</a></td>
         </tr>
         {% endfor %}
     </table>
