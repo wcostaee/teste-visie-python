@@ -9,6 +9,12 @@ def main():
     registros = db.search_all()
     return render_template("home.html", registros=registros)
 
+@app.route("/delete/<id_pessoa>")
+def delete(id_pessoa):
+    db.delete(int(id_pessoa))
+    registros = db.search_all()
+    return render_template("home.html", registros=registros)
+
 # @app.route("/style.css")
 # def static_css():
 #     return url_for("static", filename="style.css")

@@ -9,12 +9,14 @@
         <tr>
             <th>Nome</th>
             <th>Data de admissão</th>
+            <th>Excluir registro</th>
         </tr>
 
         {% for registro in registros %}
         <tr id="{{registro[0]}}">
             <td>{{registro[1]}}</td>
             <td>{{registro[2]}}</td>
+            <td><a href="delete/{{registro[0]}}" class="botao-apagar">Apagar</a></td>
         </tr>
         {% endfor %}
     </table>
