@@ -6,11 +6,26 @@ table, td, th {
 table {
     width: 500px;
 }
-
+/*Faz a tabela ficar 'zebrada' (linhas pares de uma cor, linhas impares de outra)*/
 tr:nth-child(even) {
-    background-color: #efefef;
+    background-color: #f7f7f7;
 }
 
 tr:nth-child(odd) {
-    background-color: #fefefe;
+    background-color: #ffe2e2;
+}
+
+/*Ajusta o conteudo de acordo com a resolucao disponivel: quebra em 768px*/
+@media only screen and (min-width: 768px) {
+    .content {
+        width: 500px;
+        margin: auto; /*Centraliza o conteudo*/
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .content {
+        width: 500px;
+        margin-left: 0; /*Deixa o conteudo alinhado a esquerda*/
+    }
 }

@@ -5,57 +5,63 @@
     <title>Seja bem-vindo(a)</title>
 </head>
 <body>
-    <table>
-        <tr>
-            <th>Nome</th>
-            <th>Data de admissão</th>
-            <th>Excluir registro</th>
-        </tr>
-
-        {% for each in data_formatted %}
-        <tr id="{{each[0]}}">
-            <td>{{each[1]}}</td>
-            <td>{{each[2]}}</td>
-            <td><a href="delete/{{each[0]}}" class="botao-apagar">Apagar</a></td>
-        </tr>
-        {% endfor %}
-    </table>
-    <br>
-    <br>
-    <form action="/add_person" method="POST">
-        <fieldset style="width: 400px">
-            <label for="name">Nome: </label>
-            <br>
-            <input type="text" name="name" required>
-            <hr>
-
-            <label for="rg">RG:</label>
-            <br>
-            <input type="text" name="rg" required>
-            <hr>
-
-            <label for="cpf">CPF:</label>
-            <br>
-            <input type="text" name="cpf" required>
-            <hr>
-
-            <label for="first_day_work">Data de admissão</label>
-            <br>
-            <input type="date" name="first_day_work" required>
-            <hr>
-
-            <label for="birthday">Data de nascimento</label>
-            <br>
-            <input type="date" name="birthday" required>
-            <hr>
-
-            <label for="role">Função</label>
-            <br>
-            <input type="number" name="role" required>
-            <hr>
-            <input type="submit" value="Adicionar pessoa">
-        </fieldset>
-    </form>
+    <div class="content">
+        <table>
+            <tr>
+                <th>Nome</th>
+                <th>Data de admissão</th>
+                <th>Excluir registro</th>
+            </tr>
+    
+            {% for each in data_formatted %}
+            <tr id="{{each[0]}}">
+                <td>{{each[1]}}</td>
+                <td>{{each[2]}}</td>
+                <form action="/delete/{{each[0]}}">
+                    <td><input type="submit" value="Excluir"></td>
+                </form>
+                
+                <!-- <td><a href="delete/{{each[0]}}" class="botao-apagar">Apagar</a></td> -->
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <br>
+        <form action="/add_person" method="POST">
+            <fieldset>
+                <label for="name">Nome: </label>
+                <br>
+                <input type="text" name="name" required>
+                <hr>
+    
+                <label for="rg">RG:</label>
+                <br>
+                <input type="text" name="rg" required>
+                <hr>
+    
+                <label for="cpf">CPF:</label>
+                <br>
+                <input type="text" name="cpf" required>
+                <hr>
+    
+                <label for="first_day_work">Data de admissão:</label>
+                <br>
+                <input type="date" name="first_day_work" required>
+                <hr>
+    
+                <label for="birthday">Data de nascimento:</label>
+                <br>
+                <input type="date" name="birthday" required>
+                <hr>
+    
+                <label for="role">Função:</label>
+                <br>
+                <input type="number" name="role" required>
+                <hr>
+                <input type="submit" value="Adicionar pessoa">
+            </fieldset>
+        </form>
+    </div>
 </body>
 
 </html>
