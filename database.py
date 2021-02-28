@@ -23,15 +23,20 @@ class Database:
         self.__cursor.execute(query, values)
         self.__db.commit()
 
+    def delete(self, what_id):
+        self.__cursor.execute("DELETE FROM " + self.__table_name + " WHERE id_pessoa=" + str(what_id))
+        self.__db.commit()
+
 database = Database()
 # print(type(database.search_all()[0][1]))
 dados = {
     "nome": "Joao",
     "rg": "12345",
     "cpf": "99999999",
-    "data_nascimento": '1996-03-10',
+    "data_nascimento": '1996-03-10', #AAAA-MM-DD
     "data_admissao": '2021-2-27',
     "funcao": 10
 }
-database.insert(dados)
+# database.insert(dados)
 # print(database.search_all())
+database.delete(203)
