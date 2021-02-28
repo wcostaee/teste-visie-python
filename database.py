@@ -33,7 +33,7 @@ class Database:
 
 ## Descomente alguma parte do código abaixo para testar alguma funcionalidade desta classe
 # database = Database()
-# print(type(database.search_all())
+# print(database.search_all())
 # dados = {
 #     "nome": "Joao",
 #     "rg": "12345",

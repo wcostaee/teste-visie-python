@@ -2,29 +2,28 @@ from flask import Flask, url_for, render_template, redirect, request
 from database import Database
 
 app = Flask(__name__)
-db = Database()
+db = Database() #Cria um objeto do banco de dados
 
 @app.route("/")
 def main():
-    data = db.search_all()
-    data_formatted = []
+    '''Caminho principal: mostra a pagina inicial da aplicacao'''
+    data = db.search_all() #Busca todos os registros do banco de dados
+    data_formatted = [] #Armazena os dados formatados
     for each in data:
         data_formatted.append(format_data(each))
-    return render_template("home.html", data_formatted=data_formatted)
+    #Retorna os dados formatados para serem renderizados
+    return render_template("home.html", data_formatted=data_formatted) 
 
-@app.route("/delete/<id_person>")
+@app.route("/delete/<id_person>", methods=["POST"])
 def delete(id_person):
+    '''Caminho para deletar um registro do banco de dados'''
     db.delete(int(id_person))
-    # data = db.search_all()
-    # data_formatted = []
-    # for each in data:
-    #     data_formatted.append(format_data(each))
-    # return render_template("home.html", data=data_formatted)
-    return redirect(url_for("main"))
+    return redirect(url_for("main")) #Redireciona a pagina inicial com os registros ja atualizados
 
 @app.route("/add_person", methods=["POST"])
 def add():
-    try:
+    '''Caminho para adicionar um registro'''
+    try: #Caso haja problema na conversao dos dados, uma excecao do tipo ValueError sera levantada
         info = {
             "nome": str(request.form.get("name")),
             "rg": str(request.form.get("rg")),
@@ -33,30 +32,25 @@ def add():
             "data_nascimento": str(request.form.get("birthday")),
             "funcao": int(request.form.get("role"))
         }
-        db.insert(info)
-    except KeyError:
-        print("Dados invalidos")
-    return redirect(url_for("main"))
+        db.insert(info) #A conversao deu certo. Adicione no banco de dados
+    except ValueError as err: #Houve um erro durante a conversao. Exibe o tipo de erro
+        print("Dados invalidos: ", err)
+    return redirect(url_for("main")) #Redireciona a pagina inicial (tendo dado certo ou errado)
 
 def format_data(data):
-    if len(data) == 3:
+    '''Formata os dados que vieram do banco de dados. Espera-se um tuple como "data" e com 3 posicoes.'''
+    if len(data) == 3: #O registro esta certo? (id, nome, data de admissao)
         if data[1] is None: #O nome é NULL no banco de dados
-            name = "-"
+            name = "-" #Apenas mostre '-'
         else:
-            name = (str(data[1])).split()[0]
-        if data[2] is None:
-            date = "Indefinido"
+            name = (str(data[1])).split()[0] #O nome sera quebrado por espaco e pegue apenas o primeiro nome
+                                            #Exemplo: nome="Joao da Silva" => ["Joao", "da", "Silva"]
+        if data[2] is None: #Nao tem data de admissao
+            date = "Indefinido" #Exibe 'Indefinido'
         else:
-            temp = (str(data[2])).split("-")
-            if len(temp) == 3:
-                date = temp[2] + "/" + temp[1] + "/" + temp[0]
+            temp = (str(data[2])).split("-") #Quebra a data por hifen (resultado: ["AAAA", "MM", "DD"])
+            if len(temp) == 3: #A data tem tres termos?
+                date = temp[2] + "/" + temp[1] + "/" + temp[0] #Reordene para o padrao brasileiro
             else:
-                date = "Indefinido"
-        info_output = (data[0], name, date)
-        return info_output
-
-def format_date(date):
-    print(date)
-# @app.route("/style.css")
-# def static_css():
-#     return url_for("static", filename="style.css")
+                date = "Indefinido" #Havia um erro no registro. Apenas mostre 'Indefinido'
+        return (data[0], name, date) #Retorna um tuple
