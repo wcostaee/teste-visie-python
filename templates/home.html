@@ -1,10 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href={{ url_for('static', filename='style.css') }}>
     <title>Seja bem-vindo(a)</title>
 </head>
 <body>
-    aaaaaa
+    <table>
+        <tr>
+            <th>Nome</th>
+            <th>Data de admissão</th>
+        </tr>
+
+        {% for registro in registros %}
+        <tr id="{{registro[0]}}">
+            <td>{{registro[1]}}</td>
+            <td>{{registro[2]}}</td>
+        </tr>
+        {% endfor %}
+    </table>
 </body>
 
 </html>
