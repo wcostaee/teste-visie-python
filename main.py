@@ -1,4 +1,4 @@
-from flask import Flask, url_for, render_template, redirect
+from flask import Flask, url_for, render_template, redirect, request
 from database import Database
 
 app = Flask(__name__)
@@ -22,6 +22,22 @@ def delete(id_person):
     # return render_template("home.html", data=data_formatted)
     return redirect(url_for("main"))
 
+@app.route("/add_person", methods=["POST"])
+def add():
+    try:
+        info = {
+            "nome": str(request.form.get("name")),
+            "rg": str(request.form.get("rg")),
+            "cpf": str(request.form.get("cpf")),
+            "data_admissao": str(request.form.get("first_day_work")),
+            "data_nascimento": str(request.form.get("birthday")),
+            "funcao": int(request.form.get("role"))
+        }
+        db.insert(info)
+    except KeyError:
+        print("Dados invalidos")
+    return redirect(url_for("main"))
+
 def format_data(data):
     if len(data) == 3:
         if data[1] is None: #O nome é NULL no banco de dados
@@ -39,6 +55,8 @@ def format_data(data):
         info_output = (data[0], name, date)
         return info_output
 
+def format_date(date):
+    print(date)
 # @app.route("/style.css")
 # def static_css():
 #     return url_for("static", filename="style.css")

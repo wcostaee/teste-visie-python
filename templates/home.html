@@ -20,6 +20,42 @@
         </tr>
         {% endfor %}
     </table>
+    <br>
+    <br>
+    <form action="/add_person" method="POST">
+        <fieldset style="width: 400px">
+            <label for="name">Nome: </label>
+            <br>
+            <input type="text" name="name" required>
+            <hr>
+
+            <label for="rg">RG:</label>
+            <br>
+            <input type="text" name="rg" required>
+            <hr>
+
+            <label for="cpf">CPF:</label>
+            <br>
+            <input type="text" name="cpf" required>
+            <hr>
+
+            <label for="first_day_work">Data de admissão</label>
+            <br>
+            <input type="date" name="first_day_work" required>
+            <hr>
+
+            <label for="birthday">Data de nascimento</label>
+            <br>
+            <input type="date" name="birthday" required>
+            <hr>
+
+            <label for="role">Função</label>
+            <br>
+            <input type="number" name="role" required>
+            <hr>
+            <input type="submit" value="Adicionar pessoa">
+        </fieldset>
+    </form>
 </body>
 
 </html>
